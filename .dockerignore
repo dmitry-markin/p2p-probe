@@ -1,0 +1,6 @@
+**/*.txt
+**/*.md
+target/
+
+# dotfiles in the repo root
+/.*
