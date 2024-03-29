@@ -5,7 +5,7 @@ use litep2p::{
     config::ConfigBuilder,
     error::Error,
     protocol::libp2p::identify::{Config as IdentifyConfig, IdentifyEvent},
-    transport::tcp::config::Config as TcpConfig,
+    transport::{tcp::config::Config as TcpConfig, websocket::config::Config as WsConfig},
     Litep2p, Litep2pEvent, PeerId,
 };
 use multiaddr::{Multiaddr, Protocol};
@@ -34,7 +34,10 @@ async fn main() -> anyhow::Result<()> {
                 listen_addresses: Vec::new(),
                 ..Default::default()
             })
-            .with_websocket(Default::default())
+            .with_websocket(WsConfig {
+                listen_addresses: Vec::new(),
+                ..Default::default()
+            })
             .with_libp2p_identify(identify_config)
             .build(),
     )
