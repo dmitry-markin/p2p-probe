@@ -30,14 +30,8 @@ async fn main() -> anyhow::Result<()> {
 
     let mut litep2p = Litep2p::new(
         ConfigBuilder::new()
-            .with_tcp(TcpConfig {
-                listen_addresses: Vec::new(),
-                ..Default::default()
-            })
-            .with_websocket(WsConfig {
-                listen_addresses: Vec::new(),
-                ..Default::default()
-            })
+            .with_tcp(TcpConfig { listen_addresses: Vec::new(), ..Default::default() })
+            .with_websocket(WsConfig { listen_addresses: Vec::new(), ..Default::default() })
             .with_libp2p_identify(identify_config)
             .build(),
     )
@@ -108,10 +102,7 @@ fn print_report(address: Multiaddr, event: IdentifyEvent) {
     println!("multiaddr: {address}");
     println!("peer_id: {peer}");
     println!("observed_address: {observed_address}");
-    println!(
-        "protocol_version: {:?}",
-        protocol_version.unwrap_or_default()
-    );
+    println!("protocol_version: {:?}", protocol_version.unwrap_or_default());
     println!("user_agent: {:?}", user_agent.unwrap_or_default());
     println!(
         "supported_protocols: {:#?}",
