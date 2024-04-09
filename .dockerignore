@@ -4,3 +4,4 @@ target/
 
 # dotfiles in the repo root
 /.*
+Dockerfile
