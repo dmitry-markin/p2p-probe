@@ -1,11 +1,11 @@
 # p2p-probe
 
-Probe a Substrate node and report the Identify protocol information.
+Probe a libp2p-compatible node and report the `Identify` protocol information.
 
-Example usage:
+Example usage for a Polkadot node:
 ```
-p2p-probe /ip4/127.0.0.1/tcp/30333/ws  # for full node
-p2p-probe /ip4/127.0.0.1/tcp/30333     # for validator
+p2p-probe /ip4/127.0.0.1/tcp/30333/ws  # for a full node
+p2p-probe /ip4/127.0.0.1/tcp/30333     # for a validator
 ```
 
 ## Docker
