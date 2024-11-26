@@ -3,7 +3,7 @@ use clap::Parser;
 use futures::StreamExt;
 use litep2p::{
     config::ConfigBuilder,
-    error::Error,
+    error::{DialError, NegotiationError},
     protocol::libp2p::identify::{Config as IdentifyConfig, IdentifyEvent},
     transport::{tcp::config::Config as TcpConfig, websocket::config::Config as WsConfig},
     Litep2p, Litep2pEvent, PeerId,
@@ -22,11 +22,8 @@ struct Args {
 async fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
-    let (identify_config, mut identify_event_stream) = IdentifyConfig::new(
-        "/substrate/1.0".to_string(),
-        Some("p2p-probe".to_string()),
-        Vec::new(),
-    );
+    let (identify_config, mut identify_event_stream) =
+        IdentifyConfig::new("/substrate/1.0".to_string(), Some("p2p-probe".to_string()));
 
     let mut litep2p = Litep2p::new(
         ConfigBuilder::new()
@@ -53,7 +50,9 @@ async fn main() -> anyhow::Result<()> {
                     Some(Litep2pEvent::DialFailure { address: _, error }) => {
                         if detect_peer_id {
                             match error {
-                                Error::PeerIdMismatch(_, peer_id) => {
+                                DialError::NegotiationError(
+                                    NegotiationError::PeerIdMismatch(_, peer_id)
+                                ) => {
                                     address = args
                                         .address
                                         .clone()
